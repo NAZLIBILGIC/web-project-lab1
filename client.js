@@ -1,23 +1,27 @@
-displayView = function () {
+displayView = function (contentView) {
   // the code required to display a view
+  var viewContainer = document.getElementById("viewContainer");
+  viewContainer.innerHTML = contentView;
 };
+
 window.onload = function () {
   //code that is executed as the page is loaded.
   //You shall put your own custom code here.
   //window.alert() is not allowed to be used in your implementation.
   //window.alert("Hello TDDD97!");
 
-  // For changing views between the welcome page and the profile page
-  var signedIn = false; // Atm this is static
+  // returns null if the token is not set
+  // token = localStorage.getItem("token")
+  // signedIn = token != null
+  var signedIn = false; // Atm this is static and replaced by the token from localStorage
 
   // Get the view container
-  var viewContainer = document.getElementById("viewContainer");
 
   // Find the script tag containing the appropriate view
   var welcomeViewScript = document.getElementById("welcomeview");
   var profileViewScript = document.getElementById("profileview");
 
-  // Extract the content from the script tag based on the signed-in status
+  // extract the content from the script tag based on the signed-in status
   var contentView;
   if (signedIn) {
     contentView = profileViewScript.textContent;
@@ -26,7 +30,7 @@ window.onload = function () {
   }
 
   // Insert the content into the view container
-  viewContainer.innerHTML = contentView;
+  displayView(contentView);
 };
 
 // To check password while signup is the same
@@ -65,21 +69,15 @@ function check_login(event){
 
   
   var login_info=serverstub.signIn(email_entered,password_entered)
-  console.log(login_info)
+  console.log(login_info);
   document.getElementById("login_message").innerHTML = login_info.message;
 
   if (!login_info.success) {
     event.preventDefault(); // Prevent form submission
-}
-//if (login_info.success) {
-  // Store the token in localStorage
-//  localStorage.setItem('userToken', login_info.data);
-  // Redirect to another page 
-//} else {
-  // Clear any existing token
-//  localStorage.removeItem('userToken');
-//}
-  //login_info.success=true
-  //go to next page
-  //return login_info.success
+  } else {
+    localStorage.setItem("token", login_info.data); // login token saved
+    
+    var profileViewContent = document.getElementById("profileview").textContent;
+    displayView(profileViewContent);
+  }
 }
