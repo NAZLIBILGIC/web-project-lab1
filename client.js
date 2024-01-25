@@ -59,7 +59,7 @@ function check() {
     return false;
   }
 }
-function check_login(){
+function check_login(event){
   password_entered=document.getElementById("login-password").value;
   email_entered=document.getElementById("login-email").value;
 
@@ -67,6 +67,10 @@ function check_login(){
   var login_info=serverstub.signIn(email_entered,password_entered)
   console.log(login_info)
   document.getElementById("login_message").innerHTML = login_info.message;
+
+  if (!login_info.success) {
+    event.preventDefault(); // Prevent form submission
+}
   //login_info.success=true
   //go to next page
   //return login_info.success
