@@ -68,8 +68,16 @@ function check_login(event){
   console.log(login_info)
   document.getElementById("login_message").innerHTML = login_info.message;
 
-  if (!login_info.success) {
-    event.preventDefault(); // Prevent form submission
+ // if (!login_info.success) {
+ //   event.preventDefault(); // Prevent form submission
+//}
+if (login_info.success) {
+  // Store the token in localStorage
+  localStorage.setItem('userToken', login_info.data);
+  // Redirect to another page 
+} else {
+  // Clear any existing token
+  localStorage.removeItem('userToken');
 }
   //login_info.success=true
   //go to next page
