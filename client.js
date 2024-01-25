@@ -59,3 +59,15 @@ function check() {
     return false;
   }
 }
+function check_login(){
+  password_entered=document.getElementById("login-password").value;
+  email_entered=document.getElementById("login-email").value;
+
+  if(password_entered != userinfo.password || email_entered != userinfo.email){
+    document.getElementById("error_message").innerHTML="Login information is not correct!";
+    return false;
+
+  }else{
+    return true;
+  }
+}
