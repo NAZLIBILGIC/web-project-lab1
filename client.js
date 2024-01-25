@@ -31,16 +31,16 @@ window.onload = function () {
 
 // To check password while signup is the same
 function check() {
-  print(document.getElementById("signup-password").value);
+  //window.alert(document.getElementById("signup-password").value);
   intial_pw = document.getElementById("signup-password").value;
   second_pw = document.getElementById("signup-repeatpass").value;
 
   if (intial_pw != second_pw) {
-    document.getElementById("signup_repearpass").innerHTML =
+    document.getElementById("error_message").innerHTML =
       "Password is not the same";
     return false;
   } else if (intial_pw.length > 8) {
-    document.getElementById("signup_repearpass").innerHTML =
+    document.getElementById("error_message").innerHTML =
       "Password should be equal to or more than 8 characters";
     return false;
   } else {
