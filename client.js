@@ -63,11 +63,11 @@ function check_login(){
   password_entered=document.getElementById("login-password").value;
   email_entered=document.getElementById("login-email").value;
 
-  if(password_entered != userinfo.password || email_entered != userinfo.email){
-    document.getElementById("error_message").innerHTML="Login information is not correct!";
-    return false;
-
-  }else{
-    return true;
-  }
+  
+  var login_info=serverstub.signIn(email_entered,password_entered)
+  console.log(login_info)
+  document.getElementById("login_message").innerHTML = login_info.message;
+  //login_info.success=true
+  //go to next page
+  //return login_info.success
 }
