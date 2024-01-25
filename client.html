@@ -35,7 +35,7 @@
                             </form>
                         </div>
                         <div class="signup"> 
-                            <form action="/signup" method="post">
+                            <form method="post" onsubmit="check()">
                                 <div class="input-container">
                                     <label for="signup-email">Email</label>
                                     <input type="email" id="signup-email" name="username" required placeholder="Enter your email">
@@ -95,7 +95,9 @@
         </script>
 </head>
 <body>
-    
+    <div id="viewContainer">
+
+    </div>
    
     
 </body>
