@@ -39,11 +39,23 @@ function check() {
     document.getElementById("error_message").innerHTML =
       "Password is not the same";
     return false;
-  } else if (intial_pw.length > 8) {
+  } else if (intial_pw.length < 8) {
     document.getElementById("error_message").innerHTML =
       "Password should be equal to or more than 8 characters";
     return false;
   } else {
-    return true;
+    var formData = {
+      email: document.getElementById("signup-email").value,
+      password: document.getElementById("signup-password").value,
+      firstname: document.getElementById("signup-name").value,
+      familyname: document.getElementById("signup-familyName").value,
+      gender: document.getElementById("signup-gender").value,
+      city: document.getElementById("signup-city").value,
+      country: document.getElementById("signup-country").value,
+    };
+    var userinfo = serverstub.signUp(formData);
+    document.getElementById("signup_message").innerHTML = userinfo.message;
+    //console.log(userinfo.message);
+    return false;
   }
 }
