@@ -21,7 +21,7 @@ window.onload = function () {
   var welcomeViewScript = document.getElementById("welcomeview");
   var profileViewScript = document.getElementById("profileview");
 
-  // extract the content from the script tag based on the signed-in status
+  // decide which content will be used according to signedin status
   var contentView;
   if (signedIn) {
     contentView = profileViewScript.textContent;
@@ -29,11 +29,11 @@ window.onload = function () {
     contentView = welcomeViewScript.textContent;
   }
 
-  // Insert the content into the view container
+  // insert the decided content into the view container
   displayView(contentView);
 };
 
-// To check password while signup is the same
+// check password while signup is the same
 function check() {
   //window.alert(document.getElementById("signup-password").value);
   intial_pw = document.getElementById("signup-password").value;
@@ -63,11 +63,11 @@ function check() {
     return false;
   }
 }
+//check login fields and go to next page according to login status
 function check_login(event){
   password_entered=document.getElementById("login-password").value;
   email_entered=document.getElementById("login-email").value;
 
-  
   var login_info=serverstub.signIn(email_entered,password_entered)
   console.log(login_info);
   document.getElementById("login_message").innerHTML = login_info.message;
