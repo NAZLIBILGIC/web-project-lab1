@@ -129,3 +129,15 @@ body {
   display: flex;
   flex-direction: row;
 }
+
+#home-content {
+  display: block;
+}
+
+#browse-content {
+  display: none;
+}
+
+#account-content {
+  display: none;
+}

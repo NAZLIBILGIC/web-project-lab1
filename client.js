@@ -81,3 +81,21 @@ function check_login(event) {
     displayView(profileViewContent);
   }
 }
+
+function openhome() {
+  document.getElementById("home-content").style.display = "block";
+  document.getElementById("browse-content").style.display = "none";
+  document.getElementById("account-content").style.display = "none";
+}
+
+function openbrowse() {
+  document.getElementById("home-content").style.display = "none";
+  document.getElementById("browse-content").style.display = "block";
+  document.getElementById("account-content").style.display = "none";
+}
+
+function openaccount() {
+  document.getElementById("home-content").style.display = "none";
+  document.getElementById("browse-content").style.display = "none";
+  document.getElementById("account-content").style.display = "block";
+}
