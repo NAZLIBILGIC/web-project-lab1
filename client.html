@@ -99,7 +99,36 @@
                 <div id="home-tab">
                   <button id="home-button" onclick="openhome()">home</button>
                   <div id="home-content">
-                    <p>abc</p>
+                    <p>Firstname:</p>
+                    <p id = "I1"></p>
+                    <p>Familyname:</p>
+                    <p id = "I2"></p>
+                    <p>Gender:</p>
+                    <p id = "I3"> </p>
+                    <p>City:</p>
+                    <p id = "I4"></p>
+                    <p>Country:</p>
+                    <p id = "I5"></p>
+                    <p>Email:</p>
+                    <p id = "I6"></p>
+                    <br>
+                    <form>
+                        <div class="text-area">
+                          <label for="message-content">Message</label>
+                          <input
+                            type="text"
+                            id="text"
+                            required
+                            placeholder="Enter text"
+                          />
+                        </div>
+                        <button onclick="text_save()">post</button>
+                    </form>
+                    <div id = "text-wall">
+                        
+                    </div>
+
+                    <button onclick="refresh()"> refresh </button>
                   </div>
                 </div>
                 <div id="browse-tab">

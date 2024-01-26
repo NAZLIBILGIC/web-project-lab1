@@ -13,7 +13,7 @@ window.onload = function () {
   // returns null if the token is not set
   // token = localStorage.getItem("token")
   // signedIn = token != null
-  var signedIn = true; // Atm this is static and replaced by the token from localStorage
+  var signedIn = false; // Atm this is static and replaced by the token from localStorage
 
   // Get the view container
 
@@ -63,12 +63,14 @@ function check() {
     return false;
   }
 }
+
+var login_info;
 //check login fields and go to next page according to login status
 function check_login(event) {
   password_entered = document.getElementById("login-password").value;
   email_entered = document.getElementById("login-email").value;
 
-  var login_info = serverstub.signIn(email_entered, password_entered);
+  login_info = serverstub.signIn(email_entered, password_entered);
   console.log(login_info);
   document.getElementById("login_message").innerHTML = login_info.message;
 
@@ -80,6 +82,9 @@ function check_login(event) {
     var profileViewContent = document.getElementById("profileview").textContent;
     displayView(profileViewContent);
   }
+
+  data_retrival(login_info);
+  text_display();
 }
 
 function openhome() {
@@ -98,4 +103,47 @@ function openaccount() {
   document.getElementById("home-content").style.display = "none";
   document.getElementById("browse-content").style.display = "none";
   document.getElementById("account-content").style.display = "block";
+}
+
+function data_retrival(login_info) {
+  //console.log(serverstub.getUserDataByToken(login_info.data));
+  alldata = serverstub.getUserDataByToken(login_info.data);
+  //console.log(alldata.data.city);
+  document.querySelector("#I1").textContent = alldata.data.firstname;
+  document.querySelector("#I2").textContent = alldata.data.familyname;
+  document.querySelector("#I3").textContent = alldata.data.gender;
+  document.querySelector("#I4").textContent = alldata.data.city;
+  document.querySelector("#I5").textContent = alldata.data.country;
+  document.querySelector("#I6").textContent = alldata.data.email;
+}
+
+function text_save() {
+  event.preventDefault();
+  text_msg = document.getElementById("text").value;
+
+  //console.log(login_info);
+  serverstub.postMessage(login_info.data, text_msg, alldata.data.email);
+
+  console.log(serverstub.getUserMessagesByToken(login_info.data));
+}
+
+function text_display() {
+  array = serverstub.getUserMessagesByToken(login_info.data);
+  console.log(array.data[0].content);
+  var store_value = [];
+
+  for (let rep = 0; rep < array.data.length; rep++) {
+    store_value[rep] = array.data[rep].content;
+  }
+
+  for (let rep = 0; rep < array.data.length; rep++) {
+    document.getElementById(
+      "text-wall"
+    ).innerHTML += `<div id="idChild"> ${store_value[rep]} </div>`;
+  }
+}
+
+function refresh() {
+  document.getElementById("text-wall").innerHTML = "";
+  text_display();
 }
