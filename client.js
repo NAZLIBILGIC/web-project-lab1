@@ -129,7 +129,7 @@ function text_save() {
 
 function text_display() {
   array = serverstub.getUserMessagesByToken(login_info.data);
-  console.log(array.data[0].content);
+  //console.log(array.data[0].content); there is error here in chrome console!
   var store_value = [];
 
   for (let rep = 0; rep < array.data.length; rep++) {
@@ -147,3 +147,30 @@ function refresh() {
   document.getElementById("text-wall").innerHTML = "";
   text_display();
 }
+
+function passwordChange(){
+
+
+  old_password= document.getElementById("old-password").value;
+  changed_password=password_entered = document.getElementById("changed-password").value;
+  token_login=localStorage.getItem("token")
+ 
+ 
+  var password_change = serverstub.changePassword(token_login,old_password, changed_password);
+  console.log(password_change);
+  document.getElementById("password_change_message").innerHTML = password_change.message;
+
+  return false; // prevent reload
+}
+function signout() {
+  token_login = localStorage.getItem("token");
+  var signout = serverstub.signOut(token_login);
+  document.getElementById("signout_message").innerHTML = signout.message;
+  localStorage.removeItem("token");
+  setTimeout(function(){ //make the page wait for 2 seconds before redirecting to welcome page
+    var welcomeViewScript = document.getElementById("welcomeview");
+    var contentView = welcomeViewScript.textContent;
+    displayView(contentView);
+  }, 2000);
+}
+ 

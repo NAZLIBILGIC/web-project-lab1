@@ -1,0 +1,63 @@
+<div class="profile-container">
+  <div id="home-tab">
+      <button id="home-button" onclick="openhome()">home</button>
+      <div id="home-content">
+          <p>Firstname:</p>
+          <p id="I1"></p>
+          <p>Familyname:</p>
+          <p id="I2"></p>
+          <p>Gender:</p>
+          <p id="I3"></p>
+          <p>City:</p>
+          <p id="I4"></p>
+          <p>Country:</p>
+          <p id="I5"></p>
+          <p>Email:</p>
+          <p id="I6"></p>
+          <br>
+          <form>
+              <div class="text-area">
+                  <label for="message-content">Message</label>
+                  <input
+                      type="text"
+                      id="text"
+                      required
+                      placeholder="Enter text"
+                  />
+              </div>
+              <button onclick="text_save()">post</button>
+          </form>
+          <div id="text-wall"></div>
+          <button onclick="refresh()">refresh</button>
+      </div>
+  </div>
+  <div id="browse-tab">
+      <button id="browse-button" onclick="openbrowse()">browse</button>
+      <div id="browse-content">
+          <p>def</p>
+      </div>
+  </div>
+  <div id="account-tab">
+      <button id="account-button" onclick="openaccount()">account</button>
+      <div id="account-content">
+        <form id="password-form" onsubmit="return passwordChange()">
+          <div class="input-container">
+            <label for="old-password">Old Password</label>
+            <input type="password" id="old-password" name="oldpassword" placeholder="old password">
+          </div>
+          <div class="input-container">
+            <label for="new-password">New Password</label>
+            <input type="password" id="changed-password" name="changedpassword" required minlength="8" placeholder="new password">
+          </div>
+          <div class="submit-container">
+            <button type="submit" value="save" class="save-password-button">Save</button>
+            <p id = "password_change_message"></p>
+          </div>
+        </form>
+        <div class="signout-container">
+            <button type="button" class="signout" onclick="signout()">Signout</button>
+            <p id="signout_message"></p>
+        </div>
+      </div>
+  </div>
+</div>
