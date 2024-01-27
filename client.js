@@ -148,20 +148,26 @@ function refresh() {
   text_display();
 }
 
-function passwordChange(){
+function passwordChange() {
+  event.preventDefault();
+  old_password = document.getElementById("old-password").value;
+  old_password_repeat = document.getElementById("old-password-repeat").value;
+  changed_password = password_entered = document.getElementById("changed-password").value;
+  token_login = localStorage.getItem("token");
 
+  if (old_password !== old_password_repeat) {
+    document.getElementById("password_change_message").innerHTML = "Error: Passwords do not match";
+    return false; // prevent reload
+  }
 
-  old_password= document.getElementById("old-password").value;
-  changed_password=password_entered = document.getElementById("changed-password").value;
-  token_login=localStorage.getItem("token")
- 
- 
-  var password_change = serverstub.changePassword(token_login,old_password, changed_password);
+  var password_change = serverstub.changePassword(token_login, old_password, changed_password);
   console.log(password_change);
   document.getElementById("password_change_message").innerHTML = password_change.message;
 
   return false; // prevent reload
 }
+
+
 function signout() {
   token_login = localStorage.getItem("token");
   var signout = serverstub.signOut(token_login);
