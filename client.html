@@ -95,9 +95,13 @@
                 </div>
         </script> 
         <script type="text/view" id="profileview">
+            <div class="nav-bar">
+                <button id="home-button" class="nav-button" onclick="openhome()">home</button>
+                <button id="browse-button" class="nav-button" onclick="openbrowse()">browse</button>
+                <button id="account-button" class="nav-button" onclick="openaccount()">account</button>
+              </div>
             <div class="profile-container">
                 <div id="home-tab">
-                    <button id="home-button" onclick="openhome()">home</button>
                     <div id="home-content">
                         <p>Firstname:</p>
                         <p id="I1"></p>
@@ -129,7 +133,6 @@
                     </div>
                 </div>
                 <div id="browse-tab">
-                    <button id="browse-button" onclick="openbrowse()">browse</button>
                     <div id="browse-content">
         
                         <form id="user-details" onsubmit="return userretrive()">
@@ -146,7 +149,6 @@
                     </div>
                 </div>
                 <div id="account-tab">
-                    <button id="account-button" onclick="openaccount()">account</button>
                     <div id="account-content">
                       <form id="password-form" onsubmit="return passwordChange()">
                         <div class="input-container">

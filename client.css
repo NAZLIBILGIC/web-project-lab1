@@ -142,3 +142,38 @@ body {
 #account-content {
   display: none;
 }
+
+
+/* Styles for the fixed navigation bar */
+.nav-bar {
+  position: fixed; /* Fixes the navbar to the top of the viewport */
+  top: 0; /* Aligns the navbar to the top */
+  left: 0; /* Aligns the navbar to the left */
+  width: 100%; /* Ensures the navbar stretches across the full width of the screen */
+  background-color: #4666da; /* Sets the background color */
+  color: white;
+  z-index: 1000; /* Ensures the navbar is above other elements */
+  display: flex;
+  justify-content: center; /* Centers the buttons if needed */
+  padding: 10px 0; /* Adds some padding inside the navbar */
+}
+
+/* Styles for the buttons within the navigation bar */
+.nav-button {
+  margin: 0 10px; /* Adds space between the buttons */
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  text-transform: capitalize; /* Capitalizes button text */
+}
+
+.nav-button:hover {
+  text-decoration: underline; /* Adds an underline on hover to indicate it's clickable */
+}
+
+/* Add padding at the top of the body to prevent content from hiding behind the navbar */
+body {
+  padding-top: 50px; /* Adjust the value based on the height of your nav bar */
+}
