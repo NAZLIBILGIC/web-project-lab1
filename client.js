@@ -152,12 +152,13 @@ function refresh() {
 function passwordChange() {
   event.preventDefault();
   old_password = document.getElementById("old-password").value;
-  old_password_repeat = document.getElementById("old-password-repeat").value;
+  new_password = document.getElementById("new-change-password").value;
+  new_password_repeat = document.getElementById("changed-password").value;
   changed_password = password_entered =
-    document.getElementById("changed-password").value;
+    document.getElementById("new-change-password").value;
   token_login = localStorage.getItem("token");
 
-  if (old_password !== old_password_repeat) {
+  if (new_password !== new_password_repeat) {
     document.getElementById("password_change_message").innerHTML =
       "Error: Passwords do not match";
     return false; // prevent reload
