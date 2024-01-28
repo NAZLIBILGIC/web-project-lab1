@@ -48,6 +48,7 @@ function check() {
       "Password should be equal to or more than 8 characters";
     return false;
   } else {
+    document.getElementById("error_message").innerHTML = "";
     var formData = {
       email: document.getElementById("signup-email").value,
       password: document.getElementById("signup-password").value,
@@ -152,31 +153,131 @@ function passwordChange() {
   event.preventDefault();
   old_password = document.getElementById("old-password").value;
   old_password_repeat = document.getElementById("old-password-repeat").value;
-  changed_password = password_entered = document.getElementById("changed-password").value;
+  changed_password = password_entered =
+    document.getElementById("changed-password").value;
   token_login = localStorage.getItem("token");
 
   if (old_password !== old_password_repeat) {
-    document.getElementById("password_change_message").innerHTML = "Error: Passwords do not match";
+    document.getElementById("password_change_message").innerHTML =
+      "Error: Passwords do not match";
     return false; // prevent reload
   }
 
-  var password_change = serverstub.changePassword(token_login, old_password, changed_password);
+  var password_change = serverstub.changePassword(
+    token_login,
+    old_password,
+    changed_password
+  );
   console.log(password_change);
-  document.getElementById("password_change_message").innerHTML = password_change.message;
+  document.getElementById("password_change_message").innerHTML =
+    password_change.message;
 
   return false; // prevent reload
 }
-
 
 function signout() {
   token_login = localStorage.getItem("token");
   var signout = serverstub.signOut(token_login);
   document.getElementById("signout_message").innerHTML = signout.message;
   localStorage.removeItem("token");
-  setTimeout(function(){ //make the page wait for 2 seconds before redirecting to welcome page
+  setTimeout(function () {
+    //make the page wait for 2 seconds before redirecting to welcome page
     var welcomeViewScript = document.getElementById("welcomeview");
     var contentView = welcomeViewScript.textContent;
     displayView(contentView);
   }, 2000);
 }
- 
+
+var user;
+
+function userretrive() {
+  event.preventDefault();
+
+  user = document.getElementById("user-email").value;
+  alldata = serverstub.getUserDataByEmail(login_info.data, user);
+
+  if (alldata.message == "No such user.") {
+    document.getElementById("retrive_message").innerHTML = alldata.message;
+    return;
+  } else {
+    document.getElementById("retrive_message").innerHTML = "";
+
+    document.getElementById("user-wall").innerHTML = `<div id="home-content">
+  <p>Firstname:</p>
+  <p id="I1-"></p>
+  <p>Familyname:</p>
+  <p id="I2-"></p>
+  <p>Gender:</p>
+  <p id="I3-"></p>
+  <p>City:</p>
+  <p id="I4-"></p>
+  <p>Country:</p>
+  <p id="I5-"></p>
+  <p>Email:</p>
+  <p id="I6-"></p>
+  <br>
+  <form>
+      <div class="text-area">
+          <label for="message-content">Message</label>
+          <input
+              type="text"
+              id="text-"
+              required
+              placeholder="Enter text"
+          />
+      </div>
+      <button onclick="other_user_test_save()">post</button>
+  </form>
+  <div id="text-wall-"></div>
+  <button onclick="other_user_refresh()">refresh</button>
+</div>`;
+
+    //console.log(user);
+    //alldata = serverstub.getUserDataByEmail(login_info.data, user);
+    //console.log(alldata.message);
+    //console.log(alldata.data.city);
+    document.querySelector("#I1-").textContent = alldata.data.firstname;
+    document.querySelector("#I2-").textContent = alldata.data.familyname;
+    document.querySelector("#I3-").textContent = alldata.data.gender;
+    document.querySelector("#I4-").textContent = alldata.data.city;
+    document.querySelector("#I5-").textContent = alldata.data.country;
+    document.querySelector("#I6-").textContent = alldata.data.email;
+
+    array = serverstub.getUserMessagesByEmail(login_info.data, user);
+    //console.log(array.data[0].content); there is error here in chrome console!
+    var store_value = [];
+
+    for (let rep = 0; rep < array.data.length; rep++) {
+      store_value[rep] = array.data[rep].content;
+    }
+
+    for (let rep = 0; rep < array.data.length; rep++) {
+      document.getElementById(
+        "text-wall-"
+      ).innerHTML += `<div id="idChild"> ${store_value[rep]} </div>`;
+    }
+  }
+}
+
+function other_user_test_save() {
+  event.preventDefault();
+  text_msg = document.getElementById("text-").value;
+  serverstub.postMessage(login_info.data, text_msg, user);
+}
+
+function other_user_refresh() {
+  document.getElementById("text-wall-").innerHTML = "";
+  array = serverstub.getUserMessagesByEmail(login_info.data, user);
+  //console.log(array.data[0].content); there is error here in chrome console!
+  var store_value = [];
+
+  for (let rep = 0; rep < array.data.length; rep++) {
+    store_value[rep] = array.data[rep].content;
+  }
+
+  for (let rep = 0; rep < array.data.length; rep++) {
+    document.getElementById(
+      "text-wall-"
+    ).innerHTML += `<div id="idChild"> ${store_value[rep]} </div>`;
+  }
+}
