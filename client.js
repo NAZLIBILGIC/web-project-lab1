@@ -203,7 +203,9 @@ function userretrive() {
   } else {
     document.getElementById("retrive_message").innerHTML = "";
 
-    document.getElementById("user-wall").innerHTML = `<div id="home-content">
+    document.getElementById("user-wall").innerHTML = 
+    `<div id="home-content">
+    <div class="home-info-container">
   <p>Firstname:</p>
   <p id="I1-"></p>
   <p>Familyname:</p>
@@ -216,21 +218,27 @@ function userretrive() {
   <p id="I5-"></p>
   <p>Email:</p>
   <p id="I6-"></p>
+  </div>
   <br>
   <form>
       <div class="text-area">
-          <label for="message-content">Message</label>
+          <label for="message-content">Message: </label>
           <input
               type="text"
               id="text-"
               required
-              placeholder="Enter text"
+              placeholder="Enter your text"
           />
       </div>
+      <div class="post-container ">
       <button onclick="other_user_test_save()">post</button>
+      </div>
   </form>
   <div id="text-wall-"></div>
+  <div class="refresh-container ">
   <button onclick="other_user_refresh()">refresh</button>
+  </div>
+
 </div>`;
 
     //console.log(user);
