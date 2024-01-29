@@ -220,17 +220,17 @@ function userretrive() {
 
     document.getElementById("user-wall").innerHTML = `<div id="home-content">
     <div class="home-info-container">
-  <p>First Name:</p>
+  <p class = "bold">First Name:</p>
   <p id="I1-"></p>
-  <p>Family Name:</p>
+  <p class = "bold">Family Name:</p>
   <p id="I2-"></p>
-  <p>Gender:</p>
+  <p class = "bold">Gender:</p>
   <p id="I3-"></p>
-  <p>City:</p>
+  <p class = "bold">City:</p>
   <p id="I4-"></p>
-  <p>Country:</p>
+  <p class = "bold">Country:</p>
   <p id="I5-"></p>
-  <p>Email:</p>
+  <p class = "bold">Email:</p>
   <p id="I6-"></p>
   </div>
   <br>
@@ -249,6 +249,7 @@ function userretrive() {
       <button onclick="other_user_test_save()">post</button>
       </div>
   </form>
+  <h2 class="title">All messages posted:</h2>
   <div id="text-wall-"></div>
   <div class="refresh-container ">
   <button onclick="other_user_refresh()">refresh</button>
@@ -311,8 +312,8 @@ function other_user_refresh() {
   }
 
   for (let rep = 0; rep < array.data.length; rep++) {
-    document.getElementById(
-      "text-wall-"
-    ).innerHTML += `<div id="idChild"> ${store_value[rep]} </div>`;
+    document.getElementById("text-wall-").innerHTML += `<div id="idChild"> ${
+      array.data.length - rep
+    }) ${store_value[rep]} </div>`;
   }
 }
