@@ -145,13 +145,10 @@ body {
 
 
 .nav-bar {
-  position: fixed; /* fix navbar to the top of the viewport */
-  top: 0; /* align navigation to the top */
-  left: 0; /* align navigation bar to left side of the page */
+  position: fixed; /* fix navigation bar to the top of the viewport */
+  top: 0; /* align navigation bar to the top */
   width: 100%; /* give navigation bar ->full width of the screen to make it in the middle*/
   background-color: #4666da; 
-  color: white;
-  z-index: 1000; /*navbar above other elements on our page*/
   display: flex;
   justify-content: center; /* center the buttons*/
   padding: 10px 0; /* Aadd padding inside the navigation bar*/
@@ -164,14 +161,15 @@ body {
   color: white;
   font-size: 16px;
   cursor: pointer;
-  text-transform: capitalize; 
+  text-transform: capitalize; /* start capital letter in navigation bar*/
 }
 
 .nav-button:hover {
+  /* underline tab names when cursor is on them*/
   text-decoration: underline; 
 }
 
-body {
+body { /* leave gap between th ebody of the page and tab line*/
   padding-top: 50px; 
 }
 
