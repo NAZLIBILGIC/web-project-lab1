@@ -206,9 +206,9 @@ function userretrive() {
     document.getElementById("user-wall").innerHTML = 
     `<div id="home-content">
     <div class="home-info-container">
-  <p>Firstname:</p>
+  <p>First Name:</p>
   <p id="I1-"></p>
-  <p>Familyname:</p>
+  <p>Family Name:</p>
   <p id="I2-"></p>
   <p>Gender:</p>
   <p id="I3-"></p>
