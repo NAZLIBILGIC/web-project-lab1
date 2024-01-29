@@ -202,3 +202,15 @@ body {
   margin-top: 5px;
   width: 209px;
 }
+/* container for the retriewe info button in our browse tab */
+.info-retrw-container {
+  display: flex; 
+  align-items: center; 
+}
+
+.email-browse-container {
+  display: flex;
+  align-items: center; 
+  justify-content: flex-start; 
+  gap: 10px; 
+}
