@@ -174,3 +174,31 @@ body {
 body {
   padding-top: 50px; 
 }
+
+/* container for the info in our home tab */
+.home-info-container { 
+  width: 340px; 
+  background: #fff;
+  border: 5px solid #000; 
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  justify-content: flex-start;
+  align-items: flex-start; /* information to go start of the container */
+  text-align: left; /* position the text to the left */
+  padding: 10px; 
+  margin-right: 10px;
+}
+/* container for the post button in our home tab */
+.post-container {
+  text-align: right; 
+  margin-bottom: 10px;
+  margin-top: 5px;
+  width: 209px;
+}
+/* container for the refresh button in our home tab */
+.refresh-container {
+  text-align: right; 
+  margin-bottom: 10px;
+  margin-top: 5px;
+  width: 209px;
+}
