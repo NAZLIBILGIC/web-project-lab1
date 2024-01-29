@@ -148,9 +148,9 @@ function text_display() {
   }
 
   for (let rep = 0; rep < array.data.length; rep++) {
-    document.getElementById(
-      "text-wall"
-    ).innerHTML += `<div id="idChild"> ${store_value[rep]} </div>`;
+    document.getElementById("text-wall").innerHTML += `<div id="idChild"> ${
+      array.data.length - rep
+    }) ${store_value[rep]} </div>`;
   }
 }
 
@@ -278,9 +278,9 @@ function userretrive() {
     }
 
     for (let rep = 0; rep < array.data.length; rep++) {
-      document.getElementById(
-        "text-wall-"
-      ).innerHTML += `<div id="idChild"> ${store_value[rep]} </div>`;
+      document.getElementById("text-wall-").innerHTML += `<div id="idChild"> ${
+        array.data.length - rep
+      }) ${store_value[rep]} </div>`;
     }
   }
 }
