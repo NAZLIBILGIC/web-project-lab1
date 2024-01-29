@@ -40,15 +40,15 @@ function check() {
   second_pw = document.getElementById("signup-repeatpass").value;
 
   if (intial_pw != second_pw) {
-    document.getElementById("error_message").innerHTML =
+    document.getElementById("signup_message").innerHTML =
       "Password is not the same";
     return false;
   } else if (intial_pw.length < 8) {
-    document.getElementById("error_message").innerHTML =
+    document.getElementById("signup_message").innerHTML =
       "Password should be equal to or more than 8 characters";
     return false;
   } else {
-    document.getElementById("error_message").innerHTML = "";
+    document.getElementById("signup_message").innerHTML = "";
     var formData = {
       email: document.getElementById("signup-email").value,
       password: document.getElementById("signup-password").value,
@@ -120,16 +120,26 @@ function data_retrival(login_info) {
 
 function text_save() {
   event.preventDefault();
+
   text_msg = document.getElementById("text").value;
 
-  //console.log(login_info);
-  serverstub.postMessage(login_info.data, text_msg, alldata.data.email);
+  if (text_msg != "") {
+    document.getElementById("text").value = "";
+    //console.log(text_msg);
+    console.log(login_info.data);
+    alldata = serverstub.getUserDataByToken(login_info.data);
 
-  console.log(serverstub.getUserMessagesByToken(login_info.data));
+    a = serverstub.postMessage(login_info.data, text_msg, alldata.data.email);
+
+    document.getElementById("msg_post").innerHTML = a.message;
+  } else {
+    document.getElementById("msg_post").innerHTML = "Cannot be empty";
+  }
 }
 
 function text_display() {
   array = serverstub.getUserMessagesByToken(login_info.data);
+  console.log(array);
   //console.log(array.data[0].content); there is error here in chrome console!
   var store_value = [];
 
@@ -145,6 +155,7 @@ function text_display() {
 }
 
 function refresh() {
+  document.getElementById("msg_post").innerHTML = "";
   document.getElementById("text-wall").innerHTML = "";
   text_display();
 }
@@ -154,8 +165,9 @@ function passwordChange() {
   old_password = document.getElementById("old-password").value;
   new_password = document.getElementById("new-change-password").value;
   new_password_repeat = document.getElementById("changed-password").value;
-  changed_password = password_entered =
-    document.getElementById("new-change-password").value;
+  changed_password = password_entered = document.getElementById(
+    "new-change-password"
+  ).value;
   token_login = localStorage.getItem("token");
 
   if (new_password !== new_password_repeat) {
@@ -197,14 +209,16 @@ function userretrive() {
   user = document.getElementById("user-email").value;
   alldata = serverstub.getUserDataByEmail(login_info.data, user);
 
+  console.log(alldata);
+
   if (alldata.message == "No such user.") {
+    document.getElementById("user-wall").innerHTML = "";
     document.getElementById("retrive_message").innerHTML = alldata.message;
     return;
   } else {
     document.getElementById("retrive_message").innerHTML = "";
 
-    document.getElementById("user-wall").innerHTML = 
-    `<div id="home-content">
+    document.getElementById("user-wall").innerHTML = `<div id="home-content">
     <div class="home-info-container">
   <p>First Name:</p>
   <p id="I1-"></p>
@@ -230,6 +244,7 @@ function userretrive() {
               placeholder="Enter your text"
           />
       </div>
+      <div id="msg_post-"></div>
       <div class="post-container ">
       <button onclick="other_user_test_save()">post</button>
       </div>
@@ -253,6 +268,8 @@ function userretrive() {
     document.querySelector("#I6-").textContent = alldata.data.email;
 
     array = serverstub.getUserMessagesByEmail(login_info.data, user);
+
+    console.log(array);
     //console.log(array.data[0].content); there is error here in chrome console!
     var store_value = [];
 
@@ -271,11 +288,20 @@ function userretrive() {
 function other_user_test_save() {
   event.preventDefault();
   text_msg = document.getElementById("text-").value;
-  serverstub.postMessage(login_info.data, text_msg, user);
+  user = document.getElementById("user-email").value;
+
+  if (text_msg != "") {
+    document.getElementById("text-").value = "";
+    a = serverstub.postMessage(login_info.data, text_msg, user);
+    document.getElementById("msg_post-").innerHTML = a.message;
+  } else {
+    document.getElementById("msg_post-").innerHTML = "Cannot be empty";
+  }
 }
 
 function other_user_refresh() {
   document.getElementById("text-wall-").innerHTML = "";
+  document.getElementById("msg_post-").innerHTML = "";
   array = serverstub.getUserMessagesByEmail(login_info.data, user);
   //console.log(array.data[0].content); there is error here in chrome console!
   var store_value = [];
