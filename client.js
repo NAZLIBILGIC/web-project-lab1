@@ -161,25 +161,22 @@ function refresh() {
 }
 
 function passwordChange() {
-  event.preventDefault();
   old_password = document.getElementById("old-password").value;
   new_password = document.getElementById("new-change-password").value;
   new_password_repeat = document.getElementById("changed-password").value;
-  changed_password = password_entered = document.getElementById(
-    "new-change-password"
-  ).value;
+ 
   token_login = localStorage.getItem("token");
 
   if (new_password !== new_password_repeat) {
     document.getElementById("password_change_message").innerHTML =
-      "Error: Passwords do not match";
+      "Error: New passwords do not match";
     return false; // prevent reload
   }
 
   var password_change = serverstub.changePassword(
     token_login,
     old_password,
-    changed_password
+    new_password
   );
   console.log(password_change);
   document.getElementById("password_change_message").innerHTML =
