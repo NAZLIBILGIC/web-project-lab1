@@ -29,7 +29,7 @@ body {
   position: absolute; /* For absolute positioning of child elements */
   background: transparent;
   top: 250px;
-  left: 500px;
+  left: 550px;
 }
 .logo-slogan {
   flex: 0 0 340px; /* flex-grow, flex-shrink, flex-basis */

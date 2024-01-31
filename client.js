@@ -143,7 +143,7 @@ function data_retrival(login_info) {
 }
 
 function text_save() {
-  //event.preventDefault();
+  event.preventDefault();
 
   text_msg = document.getElementById("text").value;
 
@@ -175,7 +175,7 @@ function text_display() {
   for (let rep = 0; rep < array.data.length; rep++) {
     document.getElementById("text-wall").innerHTML += `<div id="idChild"> ${
       array.data.length - rep
-    }) ${store_value[rep]} </div>`; 
+    }) ${store_value[rep]} </div>`;
   }
 }
 
@@ -232,7 +232,7 @@ function signout() {
 var user;
 
 function userretrive() {
- // event.preventDefault();
+  event.preventDefault();
 
   user = document.getElementById("user-email").value;
   alldata = serverstub.getUserDataByEmail(login_info.data, user);
@@ -316,7 +316,7 @@ function userretrive() {
 }
 
 function other_user_test_save() {
-  //event.preventDefault();
+  event.preventDefault();
   text_msg = document.getElementById("text-").value;
   user = document.getElementById("user-email").value;
 
