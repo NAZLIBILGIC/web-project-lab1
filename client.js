@@ -192,6 +192,10 @@ function passwordChange() {
   document.getElementById("password_change_message").innerHTML =
     password_change.message;
 
+  document.getElementById("old-password").value = "";
+  document.getElementById("new-change-password").value = "";
+  document.getElementById("changed-password").value = "";
+
   return false; // prevent reload
 }
 
