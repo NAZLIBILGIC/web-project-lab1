@@ -10,14 +10,14 @@ window.onload = function () {
   //window.alert() is not allowed to be used in your implementation.
   //window.alert("Hello TDDD97!");
 
+  // to skip the sign in if token exists
   // returns null if the token is not set
   // token = localStorage.getItem("token")
   // signedIn = token != null
+
   var signedIn = false;
 
-  // Get the view container
-
-  // Find the script tag containing the appropriate view
+  // finding the script tag containing the appropriate view
   var welcomeViewScript = document.getElementById("welcomeview");
   var profileViewScript = document.getElementById("profileview");
 
@@ -35,7 +35,7 @@ window.onload = function () {
 
 // check password while signup is the same
 function check() {
-  //window.alert(document.getElementById("signup-password").value);
+
   intial_pw = document.getElementById("signup-password").value;
   second_pw = document.getElementById("signup-repeatpass").value;
 
@@ -49,6 +49,7 @@ function check() {
     return false;
   } else {
     document.getElementById("signup_message").innerHTML = "";
+
     var formData = {
       email: document.getElementById("signup-email").value,
       password: document.getElementById("signup-password").value,
@@ -77,23 +78,25 @@ function check() {
 
 var login_info;
 //check login fields and go to next page according to login status
-function check_login(event) {
+function check_login() {
   password_entered = document.getElementById("login-password").value;
   email_entered = document.getElementById("login-email").value;
 
   login_info = serverstub.signIn(email_entered, password_entered);
-  console.log(login_info);
+ // console.log(login_info);
   document.getElementById("login_message").innerHTML = login_info.message;
 
   if (!login_info.success) {
-    event.preventDefault(); // Prevent form submission
+    return false; //stay on login screen
   } else {
     localStorage.setItem("token", login_info.data); // login token saved
-
+    
+    //if success true open next page
     var profileViewContent = document.getElementById("profileview").textContent;
     displayView(profileViewContent);
   }
 
+//login sucess-opening next page data retrieval and post-tezt retrieval
   data_retrival(login_info);
   text_display();
 }
@@ -102,18 +105,30 @@ function openhome() {
   document.getElementById("home-content").style.display = "block";
   document.getElementById("browse-content").style.display = "none";
   document.getElementById("account-content").style.display = "none";
+
+  document.getElementById("home-button").style.textDecoration = "underline";
+  document.getElementById("browse-button").style.textDecoration = null;
+  document.getElementById("account-button").style.textDecoration = null;
 }
 
 function openbrowse() {
   document.getElementById("home-content").style.display = "none";
   document.getElementById("browse-content").style.display = "block";
   document.getElementById("account-content").style.display = "none";
+
+  document.getElementById("home-button").style.textDecoration = null;
+  document.getElementById("browse-button").style.textDecoration = "underline";
+  document.getElementById("account-button").style.textDecoration = null;
 }
 
 function openaccount() {
   document.getElementById("home-content").style.display = "none";
   document.getElementById("browse-content").style.display = "none";
   document.getElementById("account-content").style.display = "block";
+
+  document.getElementById("home-button").style.textDecoration = null;
+  document.getElementById("browse-button").style.textDecoration = null;
+  document.getElementById("account-button").style.textDecoration = "underline";
 }
 
 function data_retrival(login_info) {

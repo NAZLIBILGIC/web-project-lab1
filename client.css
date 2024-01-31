@@ -7,7 +7,6 @@
 body {
   background-color: #4666da;
 }
-
 .welcome-container {
   height: 100%;
   margin: 0;
@@ -164,6 +163,10 @@ body {
 
 .nav-button:hover {
   /* underline tab names when cursor is on them*/
+  text-decoration: underline;
+}
+
+#home-button{
   text-decoration: underline;
 }
 
