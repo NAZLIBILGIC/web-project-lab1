@@ -13,7 +13,7 @@ window.onload = function () {
   // returns null if the token is not set
   // token = localStorage.getItem("token")
   // signedIn = token != null
-  var signedIn = false; // Atm this is static and replaced by the token from localStorage
+  var signedIn = false;
 
   // Get the view container
 
