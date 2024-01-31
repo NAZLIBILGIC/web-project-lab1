@@ -35,7 +35,6 @@ window.onload = function () {
 
 // check password while signup is the same
 function check() {
-
   intial_pw = document.getElementById("signup-password").value;
   second_pw = document.getElementById("signup-repeatpass").value;
 
@@ -83,20 +82,20 @@ function check_login() {
   email_entered = document.getElementById("login-email").value;
 
   login_info = serverstub.signIn(email_entered, password_entered);
- // console.log(login_info);
+  // console.log(login_info);
   document.getElementById("login_message").innerHTML = login_info.message;
 
   if (!login_info.success) {
     return false; //stay on login screen
   } else {
     localStorage.setItem("token", login_info.data); // login token saved
-    
+
     //if success true open next page
     var profileViewContent = document.getElementById("profileview").textContent;
     displayView(profileViewContent);
   }
 
-//login sucess-opening next page data retrieval and post-tezt retrieval
+  //login sucess-opening next page data retrieval and post-tezt retrieval
   data_retrival(login_info);
   text_display();
 }
@@ -144,7 +143,7 @@ function data_retrival(login_info) {
 }
 
 function text_save() {
-  //event.preventDefault();
+  event.preventDefault();
 
   text_msg = document.getElementById("text").value;
 
@@ -189,7 +188,7 @@ function passwordChange() {
   old_password = document.getElementById("old-password").value;
   new_password = document.getElementById("new-change-password").value;
   new_password_repeat = document.getElementById("changed-password").value;
- 
+
   token_login = localStorage.getItem("token");
 
   if (new_password !== new_password_repeat) {
