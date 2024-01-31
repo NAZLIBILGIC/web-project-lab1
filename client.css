@@ -9,7 +9,6 @@ body {
   position: relative;
 }
 .welcome-container {
-  height: 100%;
   margin: 0;
   display: flex;
   justify-content: center;
@@ -20,10 +19,9 @@ body {
 .welcome-container {
   width: 600px;
   height: 400px; /* Total height including the top margin */
-  display: flex;
   position: absolute; /* For absolute positioning of child elements */
   background: transparent;
-  top: 250;
+  top: 250px;
   left: 500px;
 }
 .logo-slogan {
