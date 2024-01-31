@@ -1,5 +1,5 @@
 displayView = function (contentView) {
-  // the code required to display a view
+  // to display a view
   var viewContainer = document.getElementById("viewContainer");
   viewContainer.innerHTML = contentView;
 };
