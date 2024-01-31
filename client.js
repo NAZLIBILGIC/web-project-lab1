@@ -144,7 +144,7 @@ function data_retrival(login_info) {
 }
 
 function text_save() {
-  event.preventDefault();
+  //event.preventDefault();
 
   text_msg = document.getElementById("text").value;
 
