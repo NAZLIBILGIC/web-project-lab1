@@ -166,7 +166,8 @@ body {
   text-decoration: underline;
 }
 
-#home-button{
+ /* default home tab underlined*/
+#home-button{ 
   text-decoration: underline;
 }
 
