@@ -171,10 +171,11 @@ function text_display() {
     store_value[rep] = array.data[rep].content;
   }
 
+  // id+text
   for (let rep = 0; rep < array.data.length; rep++) {
     document.getElementById("text-wall").innerHTML += `<div id="idChild"> ${
       array.data.length - rep
-    }) ${store_value[rep]} </div>`;
+    }) ${store_value[rep]} </div>`; 
   }
 }
 
@@ -184,6 +185,7 @@ function refresh() {
   text_display();
 }
 
+//change password in account tab
 function passwordChange() {
   old_password = document.getElementById("old-password").value;
   new_password = document.getElementById("new-change-password").value;
@@ -213,6 +215,7 @@ function passwordChange() {
   return false; // prevent reload
 }
 
+//signout function in account tab
 function signout() {
   token_login = localStorage.getItem("token");
   var signout = serverstub.signOut(token_login);
@@ -309,6 +312,7 @@ function userretrive() {
       }) ${store_value[rep]} </div>`;
     }
   }
+  return false;
 }
 
 function other_user_test_save() {
@@ -323,6 +327,7 @@ function other_user_test_save() {
   } else {
     document.getElementById("msg_post-").innerHTML = "Cannot be empty";
   }
+  return false;
 }
 
 function other_user_refresh() {
@@ -341,4 +346,5 @@ function other_user_refresh() {
       array.data.length - rep
     }) ${store_value[rep]} </div>`;
   }
+  return false;
 }
