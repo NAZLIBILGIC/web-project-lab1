@@ -35,6 +35,8 @@ window.onload = function () {
 
 // check password while signup is the same
 function check() {
+  event.preventDefault();
+
   intial_pw = document.getElementById("signup-password").value;
   second_pw = document.getElementById("signup-repeatpass").value;
 
