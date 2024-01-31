@@ -6,6 +6,7 @@
 
 body {
   background-color: #4666da;
+  position: relative;
 }
 .welcome-container {
   height: 100%;
@@ -20,8 +21,10 @@ body {
   width: 600px;
   height: 400px; /* Total height including the top margin */
   display: flex;
-  position: relative; /* For absolute positioning of child elements */
+  position: absolute; /* For absolute positioning of child elements */
   background: transparent;
+  top: 250;
+  left: 500px;
 }
 .logo-slogan {
   flex: 0 0 340px; /* flex-grow, flex-shrink, flex-basis */
@@ -166,8 +169,8 @@ body {
   text-decoration: underline;
 }
 
- /* default home tab underlined*/
-#home-button{ 
+/* default home tab underlined*/
+#home-button {
   text-decoration: underline;
 }
 
@@ -248,6 +251,5 @@ body {
 }
 #login_message {
   font-size: x-small;
-  color: maroon
+  color: maroon;
 }
-
