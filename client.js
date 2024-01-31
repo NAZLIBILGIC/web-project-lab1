@@ -61,6 +61,16 @@ function check() {
     var userinfo = serverstub.signUp(formData);
     document.getElementById("signup_message").innerHTML = userinfo.message;
     //console.log(userinfo.message);
+
+    document.getElementById("signup-email").value = "";
+    document.getElementById("signup-password").value = "";
+    document.getElementById("signup-repeatpassd").value = "";
+    document.getElementById("signup-name").value = "";
+    document.getElementById("signup-familyName").value = "";
+    document.getElementById("signup-gender").value = "";
+    document.getElementById("signup-city").value = "";
+    document.getElementById("signup-country").value = "";
+
     return false;
   }
 }
