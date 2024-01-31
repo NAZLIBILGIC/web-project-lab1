@@ -231,7 +231,7 @@ function signout() {
 
 var user;
 
-function userretrive() {
+function userretrive() { //retrieve information browse tab
   event.preventDefault();
 
   user = document.getElementById("user-email").value;
