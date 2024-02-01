@@ -12,25 +12,39 @@ window.onload = function () {
 
   // to skip the sign in if token exists
   // returns null if the token is not set
-  // token = localStorage.getItem("token")
-  // signedIn = token != null
+  token = localStorage.getItem("token");
+  signedIn = token != null;
+  // var signedIn = false;
 
-  var signedIn = false;
-
+  if(!signedIn){
+    var welcomeView = document.getElementById("welcomeview").textContent;
+      displayView(welcomeView);
+      return;
+  }
   // finding the script tag containing the appropriate view
-  var welcomeViewScript = document.getElementById("welcomeview");
-  var profileViewScript = document.getElementById("profileview");
+  var profileView = document.getElementById("profileview").textContent;
+  displayView(profileView);
 
-  // decide which content will be used according to signedin status
-  var contentView;
-  if (signedIn) {
-    contentView = profileViewScript.textContent;
-  } else {
-    contentView = welcomeViewScript.textContent;
+  //get the last active tab from localstorage
+  let activeTab = localStorage.getItem("activeProfileViewTab");
+  if(activeTab == null){ //if last tab null direct it to home tab
+    activeTab = "home";
   }
 
-  // insert the decided content into the view container
-  displayView(contentView);
+  switch (activeTab) {
+    case "home":
+      openHome();
+      break;
+    case "browse":
+      openBrowse();
+      break;
+    case "account":
+      openAccount();
+      break;
+    default:
+      console.log("returned to default tab");
+      openHome();
+  }
 };
 
 // check password while signup is the same
@@ -98,11 +112,14 @@ function check_login() {
   }
 
   //login sucess-opening next page data retrieval and post-tezt retrieval
-  data_retrival(login_info);
+  data_retrival(login_info.data);
   text_display();
 }
 
-function openhome() {
+function openHome() {
+  let token = localStorage.getItem("token");
+  data_retrival(token);
+
   document.getElementById("home-content").style.display = "block";
   document.getElementById("browse-content").style.display = "none";
   document.getElementById("account-content").style.display = "none";
@@ -110,9 +127,15 @@ function openhome() {
   document.getElementById("home-button").style.textDecoration = "underline";
   document.getElementById("browse-button").style.textDecoration = null;
   document.getElementById("account-button").style.textDecoration = null;
+  
+  //to track in which tab we left the webapp we save it to local storage with specific key-> activeProfileViewTab
+  //(keyword,value)
+  localStorage.setItem("activeProfileViewTab", "home");
 }
 
-function openbrowse() {
+function openBrowse() {
+  text_display();
+
   document.getElementById("home-content").style.display = "none";
   document.getElementById("browse-content").style.display = "block";
   document.getElementById("account-content").style.display = "none";
@@ -120,9 +143,11 @@ function openbrowse() {
   document.getElementById("home-button").style.textDecoration = null;
   document.getElementById("browse-button").style.textDecoration = "underline";
   document.getElementById("account-button").style.textDecoration = null;
+
+  localStorage.setItem("activeProfileViewTab", "browse");
 }
 
-function openaccount() {
+function openAccount() {
   document.getElementById("home-content").style.display = "none";
   document.getElementById("browse-content").style.display = "none";
   document.getElementById("account-content").style.display = "block";
@@ -130,12 +155,13 @@ function openaccount() {
   document.getElementById("home-button").style.textDecoration = null;
   document.getElementById("browse-button").style.textDecoration = null;
   document.getElementById("account-button").style.textDecoration = "underline";
+
+  localStorage.setItem("activeProfileViewTab", "account");
 }
 
-function data_retrival(login_info) {
-  //console.log(serverstub.getUserDataByToken(login_info.data));
-  alldata = serverstub.getUserDataByToken(login_info.data);
-  //console.log(alldata.data.city);
+function data_retrival(token) {
+  alldata = serverstub.getUserDataByToken(token);
+
   document.querySelector("#I1").textContent = alldata.data.firstname;
   document.querySelector("#I2").textContent = alldata.data.familyname;
   document.querySelector("#I3").textContent = alldata.data.gender;
@@ -152,10 +178,10 @@ function text_save() {
   if (text_msg != "") {
     document.getElementById("text").value = "";
     //console.log(text_msg);
-    console.log(login_info.data);
-    alldata = serverstub.getUserDataByToken(login_info.data);
+    let token = localStorage.getItem("token");
+    alldata = serverstub.getUserDataByToken(token);
 
-    a = serverstub.postMessage(login_info.data, text_msg, alldata.data.email);
+    a = serverstub.postMessage(token, text_msg, alldata.data.email);
 
     document.getElementById("msg_post").innerHTML = a.message;
   } else {
@@ -164,7 +190,8 @@ function text_save() {
 }
 
 function text_display() {
-  array = serverstub.getUserMessagesByToken(login_info.data);
+  let token = localStorage.getItem("token");
+  array = serverstub.getUserMessagesByToken(token);
   console.log(array);
   //console.log(array.data[0].content); there is error here in chrome console!
   var store_value = [];
@@ -223,6 +250,7 @@ function signout() {
   var signout = serverstub.signOut(token_login);
   document.getElementById("signout_message").innerHTML = signout.message;
   localStorage.removeItem("token");
+  localStorage.removeItem("activeProfileViewTab");
   setTimeout(function () {
     //make the page wait for 2 seconds before redirecting to welcome page
     var welcomeViewScript = document.getElementById("welcomeview");
@@ -237,7 +265,8 @@ function userretrive() { //retrieve information browse tab
   event.preventDefault();
 
   user = document.getElementById("user-email").value;
-  alldata = serverstub.getUserDataByEmail(login_info.data, user);
+  let token = localStorage.getItem("token");
+  alldata = serverstub.getUserDataByEmail(token, user);
 
   console.log(alldata);
 
@@ -298,7 +327,7 @@ function userretrive() { //retrieve information browse tab
     document.querySelector("#I5-").textContent = alldata.data.country;
     document.querySelector("#I6-").textContent = alldata.data.email;
 
-    array = serverstub.getUserMessagesByEmail(login_info.data, user);
+    array = serverstub.getUserMessagesByEmail(token, user);
 
     console.log(array);
     //console.log(array.data[0].content); there is error here in chrome console!
@@ -324,7 +353,9 @@ function other_user_test_save() {
 
   if (text_msg != "") {
     document.getElementById("text-").value = "";
-    a = serverstub.postMessage(login_info.data, text_msg, user);
+
+    let token = localStorage.getItem("token");
+    a = serverstub.postMessage(token, text_msg, user);
     document.getElementById("msg_post-").innerHTML = a.message;
   } else {
     document.getElementById("msg_post-").innerHTML = "Cannot be empty";
@@ -335,7 +366,8 @@ function other_user_test_save() {
 function other_user_refresh() {
   document.getElementById("text-wall-").innerHTML = "";
   document.getElementById("msg_post-").innerHTML = "";
-  array = serverstub.getUserMessagesByEmail(login_info.data, user);
+  let token = localStorage.getItem("token");
+  array = serverstub.getUserMessagesByEmail(token, user);
   //console.log(array.data[0].content); there is error here in chrome console!
   var store_value = [];
 
