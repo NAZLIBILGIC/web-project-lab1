@@ -119,6 +119,7 @@ function check_login() {
 function openHome() {
   let token = localStorage.getItem("token");
   data_retrival(token);
+  text_display();
 
   document.getElementById("home-content").style.display = "block";
   document.getElementById("browse-content").style.display = "none";
@@ -162,56 +163,53 @@ function openAccount() {
 function data_retrival(token) {
   alldata = serverstub.getUserDataByToken(token);
 
-  document.querySelector("#I1").textContent = alldata.data.firstname;
-  document.querySelector("#I2").textContent = alldata.data.familyname;
-  document.querySelector("#I3").textContent = alldata.data.gender;
-  document.querySelector("#I4").textContent = alldata.data.city;
-  document.querySelector("#I5").textContent = alldata.data.country;
-  document.querySelector("#I6").textContent = alldata.data.email;
+  document.getElementById("user-first-name").textContent = alldata.data.firstname;
+  document.getElementById("user-family-name").textContent = alldata.data.familyname;
+  document.getElementById("user-gender").textContent = alldata.data.gender;
+  document.getElementById("user-city").textContent = alldata.data.city;
+  document.getElementById("user-country").textContent = alldata.data.country;
+  document.getElementById("user-mail").textContent = alldata.data.email;
 }
 
 function text_save() {
   event.preventDefault();
 
-  text_msg = document.getElementById("text").value;
+  textMessage = document.getElementById("user-text-to-be-posted").value;
 
-  if (text_msg != "") {
-    document.getElementById("text").value = "";
-    //console.log(text_msg);
+  if (textMessage != "") {
+    document.getElementById("user-text-to-be-posted").value = "";
+
     let token = localStorage.getItem("token");
     alldata = serverstub.getUserDataByToken(token);
 
-    a = serverstub.postMessage(token, text_msg, alldata.data.email);
+    postMessageResponse = serverstub.postMessage(token, textMessage, alldata.data.email);
 
-    document.getElementById("msg_post").innerHTML = a.message;
+    document.getElementById("message-post-response").innerHTML = postMessageResponse.message;
   } else {
-    document.getElementById("msg_post").innerHTML = "Cannot be empty";
+    document.getElementById("message-post-response").innerHTML = "Cannot be empty";
   }
 }
 
 function text_display() {
   let token = localStorage.getItem("token");
-  array = serverstub.getUserMessagesByToken(token);
-  console.log(array);
-  //console.log(array.data[0].content); there is error here in chrome console!
-  var store_value = [];
-
-  for (let rep = 0; rep < array.data.length; rep++) {
-    store_value[rep] = array.data[rep].content;
-  }
-
-  // id+text
-  for (let rep = 0; rep < array.data.length; rep++) {
-    document.getElementById("text-wall").innerHTML += `<div id="idChild"> ${
-      array.data.length - rep
-    }) ${store_value[rep]} </div>`;
-  }
+  messagesByTokenResponse = serverstub.getUserMessagesByToken(token);
+  let messageList = messagesByTokenResponse.data.reverse();
+    
+    //display other users messages in browse tab
+    for (let index = messageList.length - 1; index >= 0; index--) {
+      document.getElementById("text-wall").innerHTML += `
+        <div id="message-${index + 1}">${index + 1} - ${messageList[index].content} <br>
+        <i>posted by: ${messageList[index].writer}</i>
+        </div>`;
+    }
 }
 
 function refresh() {
-  document.getElementById("msg_post").innerHTML = "";
+  document.getElementById("message-post-response").innerHTML = "";
   document.getElementById("text-wall").innerHTML = "";
+
   text_display();
+
 }
 
 //change password in account tab
@@ -264,121 +262,74 @@ var user;
 function userretrive() { //retrieve information browse tab
   event.preventDefault();
 
-  user = document.getElementById("user-email").value;
+  userEmail = document.getElementById("user-email").value;
   let token = localStorage.getItem("token");
-  alldata = serverstub.getUserDataByEmail(token, user);
+  otherUserData = serverstub.getUserDataByEmail(token, userEmail);
 
-  console.log(alldata);
-
-  if (alldata.message == "No such user.") {
+  if (otherUserData.success == false) { // if its not sucess
     document.getElementById("user-wall").innerHTML = "";
-    document.getElementById("retrive_message").innerHTML = alldata.message;
+    document.getElementById("retrive_message").innerHTML = otherUserData.message;
     return;
   } else {
     document.getElementById("retrive_message").innerHTML = "";
+    var browseTabContent = document.getElementById("browse-tab").innerHTML;
+    document.getElementById("user-wall").innerHTML = browseTabContent;
 
-    document.getElementById("user-wall").innerHTML = `<div id="home-content">
-    <div class="home-info-container">
-  <p class = "bold">First Name:</p>
-  <p id="I1-"></p>
-  <p class = "bold">Family Name:</p>
-  <p id="I2-"></p>
-  <p class = "bold">Gender:</p>
-  <p id="I3-"></p>
-  <p class = "bold">City:</p>
-  <p id="I4-"></p>
-  <p class = "bold">Country:</p>
-  <p id="I5-"></p>
-  <p class = "bold">Email:</p>
-  <p id="I6-"></p>
-  </div>
-  <br>
-  <form>
-      <div class="text-area">
-          <label for="message-content">Message: </label>
-          <input
-              type="text"
-              id="text-"
-              required
-              placeholder="Enter your text"
-          />
-      </div>
-      <div id="msg_post-"></div>
-      <div class="post-container ">
-      <button onclick="other_user_test_save()">post</button>
-      </div>
-  </form>
-  <h2 class="title">All messages posted:</h2>
-  <div id="text-wall-"></div>
-  <div class="refresh-container ">
-  <button onclick="other_user_refresh()">refresh</button>
-  </div>
+    // display other users information in browse tab related fields 
+    document.getElementById("other_first_name").textContent = otherUserData.data.firstname;
+    document.getElementById("other_family_name").textContent = otherUserData.data.familyname;
+    document.getElementById("other_gender").textContent = otherUserData.data.gender;
+    document.getElementById("other_city").textContent = otherUserData.data.city;
+    document.getElementById("other_country").textContent = otherUserData.data.country;
+    document.getElementById("other_email").textContent = otherUserData.data.email;
 
-</div>`;
-
-    //console.log(user);
-    //alldata = serverstub.getUserDataByEmail(login_info.data, user);
-    //console.log(alldata.message);
-    //console.log(alldata.data.city);
-    document.querySelector("#I1-").textContent = alldata.data.firstname;
-    document.querySelector("#I2-").textContent = alldata.data.familyname;
-    document.querySelector("#I3-").textContent = alldata.data.gender;
-    document.querySelector("#I4-").textContent = alldata.data.city;
-    document.querySelector("#I5-").textContent = alldata.data.country;
-    document.querySelector("#I6-").textContent = alldata.data.email;
-
-    array = serverstub.getUserMessagesByEmail(token, user);
-
-    console.log(array);
-    //console.log(array.data[0].content); there is error here in chrome console!
-    var store_value = [];
-
-    for (let rep = 0; rep < array.data.length; rep++) {
-      store_value[rep] = array.data[rep].content;
-    }
-
-    for (let rep = 0; rep < array.data.length; rep++) {
-      document.getElementById("text-wall-").innerHTML += `<div id="idChild"> ${
-        array.data.length - rep
-      }) ${store_value[rep]} </div>`;
+    messagesByEmailResponse = serverstub.getUserMessagesByEmail(token, userEmail);
+    
+    let messageList = messagesByEmailResponse.data.reverse();
+    
+    //display other users messages in browse tab
+    for (let index = messageList.length - 1; index >= 0; index--) {
+      document.getElementById("other-user-text-wall").innerHTML += `
+        <div id="message-${index + 1}">${index + 1} - ${messageList[index].content} <br>
+        <i>posted by: ${messageList[index].writer}</i>
+        </div>`;
     }
   }
   return false;
 }
 
-function other_user_test_save() {
+function other_user_test_save() { 
   event.preventDefault();
-  text_msg = document.getElementById("text-").value;
+  textMessageToBePosted = document.getElementById("message-text-to-be-posted").value;
   user = document.getElementById("user-email").value;
 
-  if (text_msg != "") {
-    document.getElementById("text-").value = "";
+  if (textMessageToBePosted != "") {
+    document.getElementById("message-text-to-be-posted").value = "";
 
     let token = localStorage.getItem("token");
-    a = serverstub.postMessage(token, text_msg, user);
-    document.getElementById("msg_post-").innerHTML = a.message;
+    postMessageResponse = serverstub.postMessage(token, textMessageToBePosted, user);
+    document.getElementById("server-response").innerHTML = postMessageResponse.message;
   } else {
-    document.getElementById("msg_post-").innerHTML = "Cannot be empty";
+    document.getElementById("server-response").innerHTML = "Cannot be empty";
   }
   return false;
 }
 
 function other_user_refresh() {
-  document.getElementById("text-wall-").innerHTML = "";
-  document.getElementById("msg_post-").innerHTML = "";
+  document.getElementById("server-response").innerHTML = "";
+  document.getElementById("message-text-to-be-posted").innerHTML = "";
+  document.getElementById("other-user-text-wall").innerHTML = "";
+  userMail = document.getElementById("user-email").value;
   let token = localStorage.getItem("token");
-  array = serverstub.getUserMessagesByEmail(token, user);
-  //console.log(array.data[0].content); there is error here in chrome console!
-  var store_value = [];
-
-  for (let rep = 0; rep < array.data.length; rep++) {
-    store_value[rep] = array.data[rep].content;
-  }
-
-  for (let rep = 0; rep < array.data.length; rep++) {
-    document.getElementById("text-wall-").innerHTML += `<div id="idChild"> ${
-      array.data.length - rep
-    }) ${store_value[rep]} </div>`;
-  }
+  
+  messagesByEmailResponse = serverstub.getUserMessagesByEmail(token, userMail);
+    let messageList = messagesByEmailResponse.data.reverse();
+    //display other users messages in browse tab
+    for (let index = messageList.length - 1; index >= 0; index--) {
+      document.getElementById("other-user-text-wall").innerHTML += `
+        <div id="message-${index + 1}">${index + 1} - ${messageList[index].content} <br>
+        <i>posted by: ${messageList[index].writer}</i>
+        </div>`;
+    }
   return false;
 }
