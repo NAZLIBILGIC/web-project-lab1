@@ -144,8 +144,10 @@ function openBrowse() {
   document.getElementById("home-button").style.textDecoration = null;
   document.getElementById("browse-button").style.textDecoration = "underline";
   document.getElementById("account-button").style.textDecoration = null;
+  document.getElementById("text-wall").innerHTML = "";
 
   localStorage.setItem("activeProfileViewTab", "browse");
+
 }
 
 function openAccount() {
@@ -156,8 +158,10 @@ function openAccount() {
   document.getElementById("home-button").style.textDecoration = null;
   document.getElementById("browse-button").style.textDecoration = null;
   document.getElementById("account-button").style.textDecoration = "underline";
+  document.getElementById("text-wall").innerHTML = "";
 
   localStorage.setItem("activeProfileViewTab", "account");
+
 }
 
 function data_retrival(token) {
